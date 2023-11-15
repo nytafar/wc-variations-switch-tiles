@@ -1,0 +1,118 @@
+.variations {
+	/* 	--accent-color: #dd9933; */
+	--bg-color: #fff;
+}
+
+.attribute-pa_variant th.label {
+    display: none;
+}
+
+/*  Variation radio buttons */
+
+.variations td.label {
+	display: none;
+}
+
+.variations input {
+	accent-color: var(--accent-dark);
+}
+
+.variations tr {
+	display: flex;
+	flex-direction: column;
+}
+
+.variations td.value {
+	display: flex;
+	flex-direction: row;
+	position: relative;
+	/* 	background-color: var(--accent-color); */
+}
+
+.variations .value label > div {
+	padding: 0.6em;
+	border: 0.2em solid var(--accent-color);
+	background-color: var(--bg-color);
+	display: block;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.variations .value input:checked + div {
+	color: var(--bg-color);
+	background-color: var(--accent-color);
+}
+
+.variations .value label {
+	position: relative;
+}
+
+.variations input {
+	position: absolute;
+	z-index: -1;
+}
+
+.variations svg {
+	fill: var(--accent-color);
+	height: 2em;
+	width: 2em;
+}
+
+.variations .value input:checked + div svg {
+	fill: var(--bg-color);
+}
+
+.variations a.reset_variations {
+	display: none !important;
+}
+
+/* End variation radio buttons */
+
+/* sticky fix */
+
+.has-subscription-plans .cart {
+	height: unset;
+}
+
+.sticky-cart .single_variation_wrap {
+	display: flex;
+}
+
+.sticky-cart .woocommerce-variation-description,
+.sticky-cart .label label,
+.sticky-cart .woocommerce-variation-price > .price,
+.wcsatt-options-product-prompt,
+.sticky-cart .woocommerce-variation-availability {
+	display: none;
+}
+
+.sticky-cart .woocommerce-variation-add-to-cart {
+	padding: 0.3em 1em;
+}
+
+.sticky-cart {
+	display: flex;
+}
+
+.sticky-cart .woocommerce-variation.single_variation {
+	display: flex;
+	align-items: center;
+}
+
+table.variations {
+	margin-bottom: unset;
+}
+
+.woocommerce-variation.single_variation div {
+	height: 100%;
+}
+
+.has-subscription-plans .sticky-cart .wcsatt-options-prompt-radios,
+.has-subscription-plans .sticky-cart .wcsatt-options-product {
+	display: block;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
