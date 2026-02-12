@@ -64,8 +64,18 @@
 	fill: var(--bg-color);
 }
 
-.variations a.reset_variations {
+.variations button.reset_variations {
 	display: none !important;
+}
+
+/* Style for inactive attribute options */
+.variations label.inactive {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.variations label.inactive input {
+	pointer-events: none !important;
 }
 
 /* End variation radio buttons */

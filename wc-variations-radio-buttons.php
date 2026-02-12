@@ -141,7 +141,7 @@
 	 new WC_Radio_Buttons();
  
 	 if ( ! function_exists( 'print_attribute_radio' ) ) {
-		 function print_attribute_radio( $checked_value, $value, $label, $name ) {
+		 function print_attribute_radio( $checked_value, $value, $label, $name, $extra_class = '' ) {
 			 global $product;
  
 			 $input_name = 'attribute_' . esc_attr( $name ) ;
@@ -149,13 +149,14 @@
 			 $id = esc_attr( $name . '_v_' . $value . $product->get_id() ); //added product ID at the end of the name to target single products
 			 $checked = checked( $checked_value, $value, false );
 			 $filtered_label = apply_filters( 'woocommerce_variation_option_name', $label, esc_attr( $name ) );
+			 $class_attr = !empty($extra_class) ? ' class="' . esc_attr($extra_class) . '"' : '';
 
 			 printf( 
-				'<label for="%3$s">
+				'<label for="%3$s"%6$s>
 					<input type="radio" name="%1$s" value="%2$s" id="%3$s" %4$s>
 					<div>
 						<svg><use href="#%2$s" width="2em" height="2em" /></svg>
-						<span>%5$s</span></div></label>', $input_name, $esc_value, $id, $checked, $filtered_label );
+						<span>%5$s</span></div></label>', $input_name, $esc_value, $id, $checked, $filtered_label, $class_attr );
 		 }
 	 }
  }
