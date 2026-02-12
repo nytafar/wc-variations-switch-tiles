@@ -45,12 +45,19 @@
 		$form.on( 'found_variation.wc-variation-form', { variationForm: self }, self.onFoundVariation );
 		$form.on( 'check_variations.wc-variation-form', { variationForm: self }, self.onFindVariation );
 		$form.on( 'update_variation_values.wc-variation-form', { variationForm: self }, self.onUpdateAttributes );
+		$form.on( 'keydown.wc-variation-form', '.reset_variations', { variationForm: self }, self.onResetKeyDown );
 
-		// Check variations once init.
 		// Init after gallery.
 		setTimeout( function() {
 			$form.trigger( 'check_variations' );
-			$form.trigger('wc_variation_form', self);
+			$form.trigger( 'wc_variation_form', self );
+
+			// For variable products, we disable the button by default to avoid
+			// shoppers submitting the form with invalid data. We remove the
+			// disabled attribute as soon as the script is loaded and let the
+			// script handle the button state.
+			// @see https://github.com/woocommerce/woocommerce/issues/62448
+			$form.find( '.single_add_to_cart_button' ).removeAttr( 'disabled' );
 			self.loading = false;
 		}, 100 );
 	};
@@ -239,7 +246,7 @@
 				'.product_dimensions, .woocommerce-product-attributes-item--dimensions .woocommerce-product-attributes-item__value'
 			),
 			$qty_input     = form.$singleVariationWrap.find( '.quantity input.qty[name="quantity"]' ),
-			$qty           = form.$singleVariationWrap.find( '.quantity' ),
+			$qty           = $qty_input.closest( '.quantity' ),
 			purchasable    = true,
 			variation_id   = '',
 			template       = false,
@@ -257,8 +264,9 @@
 			$weight.wc_reset_content();
 		}
 
-		if ( variation.dimensions ) {
-			$dimensions.wc_set_content( variation.dimensions_html );
+		if ( variation.dimensions && variation.dimensions_html ) {
+			// Decode HTML entities safely.
+			$dimensions.wc_set_content( $('<div>').html( variation.dimensions_html ).text() );
 		} else {
 			$dimensions.wc_reset_content();
 		}
@@ -278,8 +286,7 @@
 		$template_html = $template_html.replace( '/*<![CDATA[*/', '' );
 		$template_html = $template_html.replace( '/*]]>*/', '' );
 
-		form.$singleVariation.html( $template_html );
-		form.$form.find( 'input[name="variation_id"], input.variation_id' ).val( variation.variation_id ).change();
+		form.$form.find( 'input[name="variation_id"], input.variation_id' ).val( variation.variation_id ).trigger( 'change' );
 
 		// Hide or show qty input
 		if ( variation.is_sold_individually === 'yes' ) {
@@ -304,12 +311,17 @@
 			purchasable = false;
 		}
 
-		// Reveal
-		if ( $.trim( form.$singleVariation.text() ) ) {
-			form.$singleVariation.slideDown( 200 ).trigger( 'show_variation', [ variation, purchasable ] );
-		} else {
-			form.$singleVariation.show().trigger( 'show_variation', [ variation, purchasable ] );
-		}
+		// Add a delay before updating the live region to ensure screen readers pick up the content changes.
+		setTimeout( function() {
+			form.$singleVariation.html( $template_html );
+
+			// Reveal
+			if ( form.$singleVariation.text().trim() ) {
+				form.$singleVariation.slideDown( 200 ).trigger( 'show_variation', [ variation, purchasable ] );
+			} else {
+				form.$singleVariation.show().trigger( 'show_variation', [ variation, purchasable ] );
+			}
+		}, 300 );
 	};
 
 	/**
@@ -320,14 +332,13 @@
 
 		form.$form.find( 'input[name="variation_id"], input.variation_id' ).val( '' ).change();
 		form.$form.trigger( 'clear_reset_announcement' );
-		form.$form.find( '.wc-no-matching-variations' ).remove();
+		form.$form.find( '.wc-no-matching-variations' ).parent().remove();
 
 		if ( form.useAjax ) {
 			form.$form.trigger( 'check_variations' );
 		} else {
 			form.$form.trigger( 'woocommerce_variation_select_change' );
 			form.$form.trigger( 'check_variations' );
-			$( this ).blur();
 		}
 
 		// Custom event for when variation selection has been changed
@@ -465,16 +476,13 @@
 	/**
 	 * Show or hide the reset link.
 	 */
-	VariationForm.prototype.toggleResetLink = function (on) {
-		this.$resetAlert.text('');
+	VariationForm.prototype.toggleResetLink = function ( on ) {
 		if ( on ) {
 			if ( this.$resetVariations.css( 'visibility' ) === 'hidden' ) {
-				this.$resetVariations.css('visibility', 'visible').hide().fadeIn();
-				this.$resetVariations.css('display', 'inline-block');
+				this.$resetVariations.css( 'visibility', 'visible' ).hide().fadeIn();
 			}
 		} else {
-			this.$resetVariations.css('display', 'none');
-			this.$resetVariations.css('visibility', 'hidden');
+			this.$resetVariations.css( 'visibility', 'hidden' );
 		}
 	};
 
@@ -494,6 +502,17 @@
 			.next('div')
 			.find('.wc-no-matching-variations')
 			.slideDown(200);
+	};
+
+	/**
+	 * Handle reset key down event for accessibility.
+	 * @param {KeyboardEvent} event - The keyboard event object
+	 */
+	VariationForm.prototype.onResetKeyDown = function ( event ) {
+		if ( event.code === 'Enter' || event.code === 'Space' ) {
+			event.preventDefault();
+			event.data.variationForm.onReset( event );
+		}
 	};
 
 	/**
@@ -595,7 +614,7 @@
 			var slideToImage = $gallery_nav.find( 'li img[src="' + variation.image.gallery_thumbnail_src + '"]' );
 
 			if ( slideToImage.length > 0 ) {
-				slideToImage.trigger( 'click' );
+				slideToImage.trigger( 'flexslider-click' );
 				$form.attr( 'current-image', variation.image_id );
 				window.setTimeout( function() {
 					$( window ).trigger( 'resize' );
