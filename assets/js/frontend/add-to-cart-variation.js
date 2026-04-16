@@ -690,38 +690,6 @@
 	});
 
 	/**
-	 * Matches inline variation objects to chosen attributes
-	 * @deprecated 2.6.9
-	 * @type {Object}
-	 */
-	var wc_variation_form_matcher = {
-		find_matching_variations: function( product_variations, settings ) {
-			var matching = [];
-			for ( var i = 0; i < product_variations.length; i++ ) {
-				var variation    = product_variations[i];
-
-				if ( wc_variation_form_matcher.variations_match( variation.attributes, settings ) ) {
-					matching.push( variation );
-				}
-			}
-			return matching;
-		},
-		variations_match: function( attrs1, attrs2 ) {
-			var match = true;
-			for ( var attr_name in attrs1 ) {
-				if ( attrs1.hasOwnProperty( attr_name ) ) {
-					var val1 = attrs1[ attr_name ];
-					var val2 = attrs2[ attr_name ];
-					if ( val1 !== undefined && val2 !== undefined && val1.length !== 0 && val2.length !== 0 && val1 !== val2 ) {
-						match = false;
-					}
-				}
-			}
-			return match;
-		}
-	};
-
-	/**
 	 * Avoids using wp.template where possible in order to be CSP compliant.
 	 * wp.template uses internally eval().
 	 * @param {string} templateId
