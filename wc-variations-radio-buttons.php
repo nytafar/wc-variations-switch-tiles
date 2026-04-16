@@ -16,10 +16,13 @@
  if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
  include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
- 
+
  // Check if WooCommerce is active
  if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
- 
+
+	 require_once plugin_dir_path( __FILE__ ) . 'includes/class-vst-offline-variations.php';
+	 VST_Offline_Variations::init();
+
 	 class WC_Radio_Buttons {
 		 // plugin version
 		 const VERSION = '2.1.0';
