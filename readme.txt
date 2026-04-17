@@ -1,33 +1,40 @@
-=== WC Variations Radio Buttons ===
-Contributors: mantish, mariankadanka
-Donate link: mailto:paypal@8manos.com
-Tags: woocommerce, variations, radio buttons, variations radio, variations radio buttons
+=== WooCommerce Variations Switch Tiles ===
+Contributors: lassejellum, mantish, mariankadanka
+Tags: woocommerce, variations, switch tiles, radio buttons, svg icons
 Requires at least: 4.4
 Tested up to: 6.7
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Variations Radio Buttons for WooCommerce. Let your customers choose product variations using radio buttons instead of dropdowns.
+Forked from Variations Radio Buttons for WooCommerce. Let customers pick product variations with rectangular switch tile buttons (with optional SVG icons) instead of dropdowns.
 
 == Description ==
 
-Radio buttons are more friendly than dropdown selects. This plugin will help you have a better UX in your WooCommerce site, as your customers will see all your variations without having to click on a dropdown.
+Switch tiles are more tactile and visual than dropdowns. This plugin replaces WooCommerce's variation `<select>` controls with rectangular tile buttons, optionally enriched with SVG icons, giving a clearer and more touch-friendly UX.
 
-The radio buttons will be toggled dinamically so your customers won't be able to choose non existent variations.
+Tiles toggle dynamically so customers can't pick non-existent variation combinations.
+
+This fork is currently hardcoded for a specific store (Myrvann). Planned work includes generalising the styling and SVG inputs so it can be reused on any store.
 
 ### Theme Compatibility
 
-This plugin may not work out of the box with some themes. This is due to a theme having its own template for variation selection (single-product/add-to-cart/variable.php).
+This plugin may not work out of the box with some themes. This is due to a theme having its own template for variation selection (`single-product/add-to-cart/variable.php`).
 
-To make this plugin work with a non compatible theme, a [child theme](http://themify.me/docs/child-themes) has to be created.
-Then copy plugins/wc-variations-radio-buttons/templates/single-product/add-to-cart/variable.php to themes/your-child-theme/woocommerce/single-product/add-to-cart/variable.php
+To make this plugin work with a non compatible theme, copy `plugins/wc-variations-switch-tiles/templates/single-product/add-to-cart/variable.php` to `themes/your-child-theme/woocommerce/single-product/add-to-cart/variable.php`.
 
 ### Github
 
-Source code and contributions at [github](https://github.com/8manos/wc-variations-radio-buttons)
+Source code and contributions at [github](https://github.com/nytafar/wc-variations-switch-tiles).
+
+Upstream project: [8manos/wc-variations-radio-buttons](https://github.com/8manos/wc-variations-radio-buttons).
 
 == Changelog ==
+
+= 2.1.2 =
+* Rename plugin entry file to `wc-variations-switch-tiles.php` to match the fork identity.
+* Rebrand plugin header and readme as Woocommerce Variations Switch Tiles.
+* Bump tested-up-to and clean up legacy radio-buttons references.
 
 = 2.1.1 =
 * Fix variation not found message display
