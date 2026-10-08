@@ -3,7 +3,7 @@
  * Plugin Name: Woocommerce Variations Switch tiles
  * Plugin URI:  TBA
  * Description: Forked from Variations Radio Buttons for WooCommerce. Let your customers choose product variations using rectangular switch tile buttons instead of dropdowns. Also includes SVG icons. This version is hardcoded for a specific store, loose plans include universalising the styles and svg inputs.
- * Version:     2.1.1
+ * Version:     2.1.1.1
  * Author:      Lasse Jellum
  * Author URI:  https://jellum.net
  * License:     GPLv2 or later
@@ -22,7 +22,7 @@
  
 	 class WC_Radio_Buttons {
 		 // plugin version
-		 const VERSION = '2.1.0';
+		 const VERSION = '2.1.1.1';
  
 		 private $plugin_path;
 		 private $plugin_url;

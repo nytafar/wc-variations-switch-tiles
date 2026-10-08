@@ -4,7 +4,7 @@ Donate link: mailto:paypal@8manos.com
 Tags: woocommerce, variations, radio buttons, variations radio, variations radio buttons
 Requires at least: 4.4
 Tested up to: 6.7
-Stable tag: 2.1.1
+Stable tag: 2.1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,6 +28,10 @@ Then copy plugins/wc-variations-radio-buttons/templates/single-product/add-to-ca
 Source code and contributions at [github](https://github.com/8manos/wc-variations-radio-buttons)
 
 == Changelog ==
+
+= 2.1.1.1 =
+* Hide attribute options used only by archived/disabled variations, via the standard woocommerce_dropdown_variation_attribute_options_args filter
+* Remove debug HTML comments and the " [INACTIVE]" label suffix
 
 = 2.1.1 =
 * Fix variation not found message display
