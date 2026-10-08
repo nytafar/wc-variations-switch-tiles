@@ -3,7 +3,7 @@ Contributors: lassejellum, mantish, mariankadanka
 Tags: woocommerce, variations, switch tiles, radio buttons, svg icons
 Requires at least: 4.4
 Tested up to: 6.7
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,12 @@ Source code and contributions at [github](https://github.com/nytafar/wc-variatio
 Upstream project: [8manos/wc-variations-radio-buttons](https://github.com/8manos/wc-variations-radio-buttons).
 
 == Changelog ==
+
+= 2.1.3 =
+* Run each attribute's options through `woocommerce_dropdown_variation_attribute_options_args` (same args as WooCommerce's dropdown), so plugins that narrow options apply to the tiles — e.g. kaupang-attribute-suite no longer offers options only archived (disabled) variations use.
+* Remove debug HTML comments and the " [INACTIVE]" label suffix from the storefront.
+* Restore the `inactive` class on tiles with no purchasable in-stock variation (2.1.2 dropped the parameter).
+* Add `tools/check-archived-variations.php` (`wp eval-file`, exits non-zero on failure).
 
 = 2.1.2 =
 * Rename plugin entry file to `wc-variations-switch-tiles.php` to match the fork identity.

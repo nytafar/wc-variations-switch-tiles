@@ -3,7 +3,7 @@
  * Plugin Name: Woocommerce Variations Switch tiles
  * Plugin URI:  TBA
  * Description: Forked from Variations Radio Buttons for WooCommerce. Let your customers choose product variations using rectangular switch tile buttons instead of dropdowns. Also includes SVG icons. This version is hardcoded for a specific store, loose plans include universalising the styles and svg inputs.
- * Version:     2.1.2
+ * Version:     2.1.3
  * Author:      Lasse Jellum
  * Author URI:  https://jellum.net
  * License:     GPLv2 or later
@@ -22,7 +22,7 @@ if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 
 	class WC_Radio_Buttons {
 		// plugin version
-		const VERSION = '2.1.2';
+		const VERSION = '2.1.3';
 
 		private $plugin_path;
 		private $plugin_url;
@@ -109,7 +109,7 @@ if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 	new WC_Radio_Buttons();
 
 	if ( ! function_exists( 'print_attribute_radio' ) ) {
-			function print_attribute_radio( $checked_value, $value, $label, $name ) {
+			function print_attribute_radio( $checked_value, $value, $label, $name, $extra_class = '' ) {
 				global $product;
 
 				$input_name = 'attribute_' . esc_attr( $name ) ;
@@ -117,12 +117,13 @@ if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 				$id = esc_attr( $name . '_v_' . $value . $product->get_id() ); //added product ID at the end of the name to target single products
 				$checked = checked( $checked_value, $value, false );
 				$filtered_label = apply_filters( 'woocommerce_variation_option_name', $label, esc_attr( $name ) );
+				$class_attr = $extra_class ? ' class="' . esc_attr( $extra_class ) . '"' : '';
 
 				printf( 
-					'<label for="%3$s">
+					'<label for="%3$s"%6$s>
 						<input type="radio" name="%1$s" value="%2$s" id="%3$s" %4$s>
 						<div>
-							<span>%5$s</span></div></label>', $input_name, $esc_value, $id, $checked, $filtered_label );
+							<span>%5$s</span></div></label>', $input_name, $esc_value, $id, $checked, $filtered_label, $class_attr );
 		}
 	}
 }
